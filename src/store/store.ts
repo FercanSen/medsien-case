@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import kanbanReducer from "./kanbanSlice";
+import { localStorageMiddleware } from "./localStorageMiddleware";
 
 export const store = configureStore({
   reducer: {
-    // TODO: Add slices here
+    kanban: kanbanReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
