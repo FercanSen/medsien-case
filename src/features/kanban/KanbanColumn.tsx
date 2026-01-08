@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { type ColumnId, type Task as TaskType } from "@/types/kanban";
@@ -49,6 +49,8 @@ export function KanbanColumn({ column, tasks }: KanbanColumnProps) {
     transform: CSS.Translate.toString(transform),
     transition,
   };
+
+  const tasksIds = useMemo(() => tasks.map((t) => t.id), [tasks]);
 
   const handleTitleSubmit = () => {
     if (title.trim() !== column.title) {
@@ -163,7 +165,7 @@ export function KanbanColumn({ column, tasks }: KanbanColumnProps) {
       {/* Column Body / Droppable Area */}
       <div className="p-2 flex-1 flex flex-col gap-2 pb-4 overflow-y-auto rounded-b-xl bg-surface">
         <SortableContext
-          items={column.taskIds}
+          items={tasksIds}
           strategy={verticalListSortingStrategy}
         >
           {tasks.map((task) => (

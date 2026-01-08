@@ -24,13 +24,24 @@ import { type Task, type Column } from "@/types/kanban";
 
 export function KanbanBoard() {
   const dispatch = useAppDispatch();
-  const { columns, tasks } = useAppSelector((state) => state.kanban);
+  const { columns, tasks, searchTerm } = useAppSelector(
+    (state) => state.kanban
+  );
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-  // Optimized sorting memoization
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+
+  const displayTasks = useMemo(() => {
+    if (!searchTerm) return tasks;
+    const lowerTerm = searchTerm.toLowerCase();
+    return tasks.filter(
+      (t) =>
+        t.title.toLowerCase().includes(lowerTerm) ||
+        t.description.toLowerCase().includes(lowerTerm)
+    );
+  }, [tasks, searchTerm]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -98,7 +109,7 @@ export function KanbanBoard() {
                 key={col.id}
                 column={col}
                 tasks={col.taskIds
-                  .map((taskId) => tasks.find((t) => t.id === taskId))
+                  .map((taskId) => displayTasks.find((t) => t.id === taskId))
                   .filter((t): t is Task => !!t)}
               />
             ))}

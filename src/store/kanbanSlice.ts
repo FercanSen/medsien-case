@@ -21,14 +21,20 @@ const loadState = (): BoardState => {
       return {
         columns: DEFAULT_COLUMNS,
         tasks: [],
+        searchTerm: "",
       };
     }
-    return JSON.parse(serializedState);
+    const state = JSON.parse(serializedState);
+    return {
+      ...state,
+      searchTerm: state.searchTerm || "",
+    };
   } catch (err) {
     console.error("Failed to load state", err);
     return {
       columns: DEFAULT_COLUMNS,
       tasks: [],
+      searchTerm: "",
     };
   }
 };
@@ -39,6 +45,9 @@ export const kanbanSlice = createSlice({
   name: "kanban",
   initialState,
   reducers: {
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+    },
     // --- Column Actions ---
     addColumn: (state, action: PayloadAction<{ title: string }>) => {
       const newColumn: Column = {
@@ -255,6 +264,7 @@ export const {
   updateTask,
   deleteTask,
   moveTask,
+  setSearchTerm,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

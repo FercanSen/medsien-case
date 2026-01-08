@@ -18,4 +18,5 @@ export interface Column {
 export interface BoardState {
   columns: Column[];
   tasks: Task[];
+  searchTerm?: string;
 }
