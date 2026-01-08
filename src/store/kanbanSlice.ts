@@ -116,7 +116,24 @@ export const kanbanSlice = createSlice({
         column.taskIds.push(newTask.id);
       }
     },
+    addTasks: (
+      state,
+      action: PayloadAction<{ title: string; description: string }[]>
+    ) => {
+      const todoColumn = state.columns.find((c) => c.id === "todo");
+      if (!todoColumn) return;
 
+      const newTasks: Task[] = action.payload.map((t) => ({
+        id: uuidv4(),
+        title: t.title,
+        description: t.description || "",
+        columnId: "todo",
+        createdAt: Date.now(),
+      }));
+
+      state.tasks.push(...newTasks);
+      todoColumn.taskIds.push(...newTasks.map((t) => t.id));
+    },
     updateTask: (
       state,
       action: PayloadAction<{ id: TaskId; title: string; description: string }>
@@ -234,6 +251,7 @@ export const {
   deleteColumn,
   moveColumn,
   addTask,
+  addTasks,
   updateTask,
   deleteTask,
   moveTask,

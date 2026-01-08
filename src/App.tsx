@@ -1,9 +1,20 @@
 import { DashboardLayout } from "@/layouts/DashboardLayout";
-import { KanbanBoard, AddColumnButton } from "@/features/kanban";
+import {
+  KanbanBoard,
+  AddColumnButton,
+  PopulateBoardButton,
+} from "@/features/kanban";
 
 function App() {
   return (
-    <DashboardLayout headerAction={<AddColumnButton />}>
+    <DashboardLayout
+      headerAction={
+        <div className="flex gap-2">
+          <PopulateBoardButton />
+          <AddColumnButton />
+        </div>
+      }
+    >
       <KanbanBoard />
     </DashboardLayout>
   );
