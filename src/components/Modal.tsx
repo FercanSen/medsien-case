@@ -53,7 +53,7 @@ export function Modal({
     >
       <div
         className={cn(
-          "bg-surface rounded-lg shadow-xl w-full max-w-md border border-border animate-in zoom-in-95 duration-200",
+          "bg-surface rounded-lg shadow-xl w-full max-w-md border border-border animate-in zoom-in-95 duration-200 flex flex-col max-h-[85vh]",
           className
         )}
       >
@@ -69,7 +69,7 @@ export function Modal({
             <span className="sr-only">Close</span>
           </Button>
         </div>
-        <div className="p-4">{children}</div>
+        <div className="p-4 overflow-y-auto">{children}</div>
       </div>
     </div>,
     document.body

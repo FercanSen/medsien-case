@@ -15,6 +15,7 @@ export function TaskCard({ task }: TaskCardProps) {
   const dispatch = useAppDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [editTitle, setEditTitle] = useState(task.title);
   const [editDescription, setEditDescription] = useState(task.description);
 
@@ -55,6 +56,11 @@ export function TaskCard({ task }: TaskCardProps) {
     setIsEditModalOpen(true);
   };
 
+  const handleViewOpen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsViewModalOpen(true);
+  };
+
   const handleSaveEdit = () => {
     if (editTitle.trim()) {
       dispatch(
@@ -89,7 +95,10 @@ export function TaskCard({ task }: TaskCardProps) {
         className="p-3 group relative bg-white border-zinc-200 hover:border-primary active:cursor-grabbing touch-none"
       >
         <div className="pr-6">
-          <h4 className="text-sm font-semibold text-zinc-800 mb-1">
+          <h4
+            className="text-sm font-semibold text-zinc-800 mb-1 cursor-pointer hover:text-primary transition-colors"
+            onClick={handleViewOpen}
+          >
             {task.title}
           </h4>
           {task.description && (
@@ -134,6 +143,7 @@ export function TaskCard({ task }: TaskCardProps) {
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
               autoFocus
+              maxLength={50}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -158,6 +168,28 @@ export function TaskCard({ task }: TaskCardProps) {
               </Button>
               <Button variant="primary" onClick={handleSaveEdit}>
                 Save Changes
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {isViewModalOpen && (
+        <Modal
+          isOpen={isViewModalOpen}
+          onClose={() => setIsViewModalOpen(false)}
+          title={task.title}
+        >
+          <div className="flex flex-col gap-4">
+            <div
+              className="text-sm text-zinc-600 prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{
+                __html: task.description || "<p>No description provided.</p>",
+              }}
+            />
+            <div className="flex justify-end pt-4 border-t border-zinc-100">
+              <Button variant="ghost" onClick={() => setIsViewModalOpen(false)}>
+                Close
               </Button>
             </div>
           </div>
