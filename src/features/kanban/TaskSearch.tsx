@@ -8,7 +8,7 @@ export function TaskSearch() {
   const searchTerm = useAppSelector((state) => state.kanban.searchTerm);
 
   return (
-    <div className="relative w-64">
+    <div className="relative w-full md:w-64">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-zinc-500" />
       <Input
         placeholder="Search tasks..."

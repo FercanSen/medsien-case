@@ -19,7 +19,12 @@ export function AddColumnButton() {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)} size="sm" variant="primary">
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        size="sm"
+        variant="primary"
+        className="w-full md:w-auto"
+      >
         <Plus className="mr-2 h-4 w-4" />
         Add Column
       </Button>

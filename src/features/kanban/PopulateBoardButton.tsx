@@ -41,6 +41,7 @@ export function PopulateBoardButton() {
       variant="secondary"
       disabled={isLoading}
       title="Populate board with sample tasks"
+      className="w-full md:w-auto"
     >
       <Download className="mr-2 h-4 w-4" />
       {isLoading ? "Loading..." : "Populate Board"}

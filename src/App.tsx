@@ -10,11 +10,17 @@ function App() {
   return (
     <DashboardLayout
       headerAction={
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-2 items-stretch md:items-center w-full">
           <TaskSearch />
-          <div className="w-px h-6 bg-zinc-200 mx-1" />
-          <PopulateBoardButton />
-          <AddColumnButton />
+          <div className="hidden md:block w-px h-6 bg-zinc-200 mx-1" />
+          <div className="flex gap-2">
+            <div className="flex-1 md:flex-none">
+              <PopulateBoardButton />
+            </div>
+            <div className="flex-1 md:flex-none">
+              <AddColumnButton />
+            </div>
+          </div>
         </div>
       }
     >
